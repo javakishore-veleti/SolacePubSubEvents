@@ -15,4 +15,31 @@ http://www.springframework.org/schema/util  http://www.springframework.org/schem
 	<util:properties id="applicationProps"
 		location="application.properties"></util:properties>
 
+
+
+	<bean id="heartBeatInfoServiceImpl"
+		class="jk.pubsub.solace.forex.trades.main.HeartBeatInfoServiceImpl"></bean>
+
+	<!-- https://docs.spring.io/spring/docs/3.2.x/spring-framework-reference/html/remoting.html -->
+	<bean name="heartBeatInfoServiceExporter"
+		class="org.springframework.remoting.httpinvoker.SimpleHttpInvokerServiceExporter">
+		<property name="service" ref="heartBeatInfoServiceImpl" />
+		<property name="serviceInterface"
+			value="jk.pubsub.solace.forex.trades.main.HeartBeatInfoService" />
+	</bean>
+
+
+	<!-- simulation web.xml servlet-mappings example -->
+	<bean id="httpServer"
+		class="org.springframework.remoting.support.SimpleHttpServerFactoryBean">
+		<property name="contexts">
+			<util:map>
+				<entry key="#{applicationProps['app.server.api.url']}"
+					value-ref="heartBeatInfoServiceExporter" />
+			</util:map>
+		</property>
+		<property name="port"
+			value="#{applicationProps['app.server.http.port']}" />
+	</bean>
+
 </beans>

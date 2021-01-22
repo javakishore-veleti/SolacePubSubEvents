@@ -1,0 +1,1 @@
+docker restart solace-pubsub-poc-rabbitmq &   

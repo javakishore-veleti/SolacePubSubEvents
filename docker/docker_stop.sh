@@ -1,0 +1,1 @@
+docker stop solace-pubsub-poc-rabbitmq   

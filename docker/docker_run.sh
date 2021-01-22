@@ -1,0 +1,1 @@
+docker run --name solace-pubsub-poc-rabbitmq rabbitmq &  
